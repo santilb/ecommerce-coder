@@ -5,7 +5,7 @@ import CONFIG from "./config.js";
 const { MONGO_USER, MONGO_PASS, DB_NAME } = CONFIG;
 const config = {
   mongoDB: {
-    URL: `mongodb+srv://${MONGO_USER}:${MONGO_PASS}@cluster0.cyfup.mongodb.net/${DB_NAME}?retryWrites=true&w=majority `,
+    URL: `mongodb+srv://${MONGO_USER}:${MONGO_PASS}@coderhouse.ai8ozim.mongodb.net/${DB_NAME}?retryWrites=true&w=majority `,
     options: {
       useNewUrlParser: true,
       useUnifiedTopology: true,
