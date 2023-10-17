@@ -10,7 +10,6 @@ import { validateRequest } from "../../middleware/validators.js";
 import { isAuth, isAdmin } from "../../middleware/auth.js";
 const router = Router();
 
-/**Rutas */
 router.get("/", isAuth, getAll);
 router.get("/:id", isAuth, getOne);
 router.post("/", isAuth, isAdmin, validateRequest, create);

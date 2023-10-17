@@ -1,8 +1,17 @@
-import userDTOResponse from "../dto/responses/user.response.dto.js";
-class AuthController {
-  async viewLogin(req, res) {
+import { ProductService } from "../services/product.service.js";
+const productService = new ProductService();
+class ProductController {
+  async getAll(req, res) {
     try {
-      res.render("login");
+      const { limit, page, sort, query } = req.query;
+
+      const products = await productService.getAll(limit, page, sort, query);
+      products
+        ? res.status(200).json({
+            status: "success",
+            payload: products,
+          })
+        : res.status(200).json({ status: "success", payload: [] });
     } catch (err) {
       res.status(err.status || 500).json({
         status: "error",
@@ -11,9 +20,20 @@ class AuthController {
     }
   }
 
-  async viewRegister(req, res) {
+  async getOne(req, res) {
     try {
-      res.render("register");
+      const id = req.params.id;
+      const product = await productService.getOne(id);
+      product
+        ? res.status(200).json({
+            status: "success",
+            payload: product,
+          })
+        : res.status(404).json({
+            status: "error",
+            message: "Sorry, no product found by id: " + id,
+            payload: {},
+          });
     } catch (err) {
       res.status(err.status || 500).json({
         status: "error",
@@ -22,40 +42,71 @@ class AuthController {
     }
   }
 
-  async getCurrentUser(req, res) {
-    /**No consulta a la DB, sino que obtiene el user del req
-     * (passport lo guarda en el req luego del login)
-     */
+  async create(req, res) {
     try {
-      const user = await req.user;
-      const userDTO = new userDTOResponse(user);
-      res.json(userDTO);
-    } catch (err) {
-      res.status(err.status || 500).json({
-        status: "error",
-        payload: err.message,
-      });
-    }
-  }
-  async logout(req, res) {
-    // Logout 
-    req.logout(function (err) {
-      if (err) {
-        console.error(err);
-        // Redirects to error page
-        return res.redirect("/error");
+      const newProduct = req.body;
+      // validate code not repeated
+      const response = await productService.getAll();
+      const allProducts = response.docs;
+      const product = allProducts.find(
+        (product) => product.code == newProduct.code
+      );
+      if (product) {
+        res.status(400).json({
+          status: "error",
+          payload:
+            "Invalid request body. Code already exists: " + newProduct.code,
+        });
+        return;
       }
-      // Redirects user login path
-      res.render("login");
-    });
+      const productCreated = await productService.create(newProduct);
+
+      res.status(201).json({
+        status: "success",
+        payload: productCreated,
+      });
+    } catch (err) {
+      res.status(err.status || 500).json({
+        status: "error",
+        payload: err.message,
+      });
+    }
   }
 
-  async redirectToHome(req, res) {
-    res.redirect("/home");
+  async update(req, res) {
+    try {
+      const id = req.params.id;
+      const newProduct = req.body;
+      const productUpdated = await productService.update(id, newProduct);
+      res.status(200).json({
+        status: "success",
+        payload: productUpdated,
+      });
+    } catch (err) {
+      res.status(err.status || 500).json({
+        status: "error",
+        payload: err.message,
+      });
+    }
+  }
+  async deleteOne(req, res) {
+    try {
+      const id = req.params.id;
+      const productDeleted = await productService.delete(id);
+      res.status(200).json({
+        status: "success",
+        payload: productDeleted,
+      });
+    } catch (err) {
+      res.status(err.status || 500).json({
+        status: "error",
+        payload: err.message,
+      });
+    }
   }
 }
 
-const authController = new AuthController();
-const { viewLogin, viewRegister, getCurrentUser, logout, redirectToHome } =
-  authController;
-export { viewLogin, viewRegister, getCurrentUser, logout, redirectToHome };
+const productController = new ProductController();
+const { getAll, getOne, create, update, deleteOne } = productController;
+
+export { getAll, getOne, create, update, deleteOne };
