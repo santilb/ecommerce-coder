@@ -2,11 +2,14 @@
   "name": "ecommerce",
   "version": "1.0.0",
   "description": "Ecommerce - Comision 51380",
-  "main": "index.js",
+  "main": "app.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --experimental-json-modules src/app.js",
-    "dev": "nodemon --experimental-json-modules src/app.js"
+    "test:products": "mocha test/productsTest.js",
+    "test:carts": "mocha test/cartsTest.js",
+    "test:users": "mocha test/usersTest.js",
+    "start": "node ./src/app.js",
+    "dev": "nodemon ./src/app.js"
   },
   "repository": {
     "type": "git",
@@ -28,9 +31,11 @@
     "express": "^4.18.2",
     "express-handlebars": "^7.0.7",
     "express-session": "^1.17.3",
+    "mocha": "^10.2.0",
     "mongoose": "^7.2.1",
     "mongoose-paginate-v2": "^1.7.1",
     "multer": "^1.4.5-lts.1",
+    "nodemon": "^3.0.1",
     "passport": "^0.6.0",
     "passport-github2": "^0.1.12",
     "passport-local": "^1.0.0",
