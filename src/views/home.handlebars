@@ -1,9 +1,9 @@
 {{! HEADER }}
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item" href="https://bulma.io">
+    <a class="navbar-item" href="/">
       <img
-        src="https://github.com/Lauriacunia/desafio8-session/assets/63796774/b279eabe-dfac-48cb-8c4d-4a941ce1168e"
+        src="https://logo.com/image-cdn/images/kts928pd/production/2305c171f221a8e43ef12e16ca0d91cecbb60160-414x420.png"
         width="70"
         style="max-height: max-content;"
       />
@@ -33,7 +33,7 @@
                       align-items: center;"
             >
               <div>
-                <h4 class="title is-4" style="margin-right: 15px;">👋 Hola
+                <h4 class="title is-4" style="margin-right: 15px;">Bienvenido
                   {{user.first_name}}
                   {{user.last_name}}</h4>
               </div>
@@ -64,125 +64,12 @@
     </div>
   </div>
 </nav>
-{{! FORMULARIO DE CREACIÓN DE PRODUCTOS }}
-{{! <section>
-  <div class="container mt-6" style="max-width: 500px">
-    <form action="/api/products" method="post" enctype="multipart/form-data">
-      <h3 class="is-size-3 mb-5">Ingrese un nuevo producto</h3>
-      <div class="field">
-        <label class="label">Nombre</label>
-        <div class="control has-icons-left has-icons-right">
-          <input
-            class="input is-success"
-            type="text"
-            placeholder="Ingrese el nombre del producto"
-            value=""
-            name="title"
-          />
-        </div>
-      </div>
-      <div class="field">
-        <label class="label">Descripción</label>
-        <div class="control has-icons-left has-icons-right">
-          <textarea
-            value=""
-            name="description"
-            class="textarea is-success"
-            placeholder="Ingrese una breve descripción del producto"
-            rows="3"
-          ></textarea>
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="label">Código</label>
-        <div class="control has-icons-left has-icons-right">
-          <input
-            class="input is-success"
-            type="text"
-            placeholder="Ingrese el código del producto"
-            value=""
-            name="code"
-          />
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="label">Precio</label>
-        <div class="control has-icons-left has-icons-right">
-          <input
-            class="input is-success"
-            type="text"
-            placeholder="Ingrese el precio del producto"
-            value=""
-            name="price"
-          />
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="label">Stock</label>
-        <div class="control has-icons-left has-icons-right">
-          <input
-            class="input is-success"
-            type="number"
-            min="0"
-            max="10000"
-            value="0"
-            name="stock"
-          />
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="label">Categoría</label>
-        <div class="control has-icons-left has-icons-right">
-          <div class="select is-primary">
-            <select name="category">
-              <option value="Tecnología">Tecnología</option>
-              <option value="Hogar">Hogar</option>
-              <option value="Smartphones">Smartphones</option>
-              <option value="Muebles">Muebles</option>
-              <option value="Cosmética y belleza">Cosmética y belleza</option>
-              <option value="Indumentaria">Indumentaria</option>
-              <option value="Herramientas">Herramientas</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="field">
-        <div class="file is-boxed">
-          <label class="file-label">
-            <input class="file-input" type="file" name="thumbnail" />
-            <span class="file-cta">
-              <span class="file-icon">
-                <ion-icon
-                  name="cloud-upload-outline"
-                  style="font-size: 25px"
-                ></ion-icon>
-              </span>
-              <span class="file-label"> Sube una imágen </span>
-            </span>
-          </label>
-        </div>
-      </div>
-      <div class="field is-grouped">
-        <div class="control">
-          <button class="button is-primary is-light">Guardar</button>
-        </div>
-      </div>
-    </form>
-  </div>
-</section> }}
-
-{{! LISTA DE PRODUCTOS }}
 
 <section class="mt-6">
   <div class="container is-flex is-flex-wrap-wrap" id="products-container">
   </div>
 </section>
 {{!PAGINATION  }}
-<div id="pagination-container" style="margin:50px;"></div>
 
-<script src="/js/home.js"></script>
+<div id="pagination-container" style="margin:50px;"></div>
+<script src="js/home.js"></script>
