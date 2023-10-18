@@ -1,5 +1,21 @@
+/*const createCart = () => {
+  console.log("🛒 Creando tu carrito...");
+  if (!localStorage.getItem("funcionEjecutadaSoloUnaVez")) {
+    fetch("/carts", {
+      method: "POST",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        let myCart = data.payload;
+        localStorage.setItem("myCart", JSON.stringify(myCart));
+        localStorage.setItem("cartId", JSON.stringify(myCart._id));
+      })
+      .catch((err) => console.log(err));
+  }
+};*/
+
 const getCurrentUser = () => {
-    // console.log("Get current user...");
+
     fetch("/auth/current", {
       method: "GET",
     })
@@ -11,7 +27,7 @@ const getCurrentUser = () => {
           localStorage.setItem("email", JSON.stringify(user.email));
           localStorage.setItem(
             "fullname",
-            JSON.stringify(user.first_name + " " + user.last_name)
+            JSON.stringify(user.name + " " + user.last_name)
           );
           if (user.cart) {
             localStorage.setItem("cartId", JSON.stringify(user.cart));
@@ -35,7 +51,7 @@ const getCurrentUser = () => {
     if (query) {
       urlBase += `&query[title]=${query}`;
     }
-    //console.log("urlBase", urlBase);
+  
     fetch(`${urlBase}`)
       .then((res) => res.json())
       .then((data) => {
@@ -51,32 +67,13 @@ const getCurrentUser = () => {
     productsContainer.innerHTML = "";
     products.forEach((product) => {
       productsContainer.innerHTML += `
-        <div class="card" style="width: 250px; margin: 20px">
-          <div class="card-image" style="padding: 15px">
-            <figure class="image is-4by3">
-              <img src="${product.thumbnail}" alt="Placeholder image" />
-            </figure>
-          </div>
-          <div class="card-content">
-            <div class="media">
-              <div class="media-content">
-                <p class="title is-6">${product.title}</p>
-                <p class="title is-4">${product.description}</p>
-                <p class="subtitle is-6">${product.price}</p>
-              </div>
-            </div>
-            <button
-              class="button is-small"
-              type="button"
-              onclick="addToCart('${product._id}')"
-            ><ion-icon name="cart"></ion-icon>
-            </button>
-            <button
-              class="button is-small"
-              type="button"
-              onclick="deleteProduct('${product._id}')"
-            ><ion-icon name="trash"></ion-icon></button>
-  
+        <div class="card" style="width: 220px; margin: 20px">
+          <img class="card-img-top" src="${product.thumbnail}" alt="Product Image" />
+          <div class="card-body">
+          <h5 class="card-title">${product.title}</h5>
+          <p class="card-text">${product.price}</p>
+          <button type="button" onclick="addToCart('${product._id}')" class="btn btn-primary">Add</button>
+          <button type="button" onclick="deleteProduct('${product._id}')"class="btn btn-secondary">Remove</button>
           </div>
         </div>
       `;
@@ -94,24 +91,20 @@ const getCurrentUser = () => {
     const paginationContainer = document.getElementById("pagination-container");
     paginationContainer.innerHTML = "";
     paginationContainer.innerHTML += `
-      <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-        <a class="pagination-previous" ${
+      <nav aria-label="pagination">
+      <ul class="pagination justify-content-end">
+      <li class="page-item">
+        <a class="page-link" ${
           hasPrevPage ? `onclick="getAllProducts(${limit}, ${prevPage})"` : ""
         }>Previous</a>
-        <a class="pagination-next" ${
+        </li>
+        <li class="page-item active"><a class="page-link" href="#">${page}</a></li>
+        <a class="page-link" ${
           hasNextPage ? `onclick="getAllProducts(${limit}, ${nextPage})"` : ""
         }>Next page</a>
-        <ul class="pagination-list">
-          <li><a class="pagination-link" ${
-            page === 1 ? `onclick="getAllProducts(${limit}, 1)"` : ""
-          }>1</a></li> 
-          <li><span class="pagination-ellipsis">&hellip;</span></li>
-          <li><a class="pagination-link" ${
-            page === totalPages
-              ? `onclick="getAllProducts(${limit}, ${totalPages})"`
-              : ""
-          }>${totalPages}</a></li>
+        ${page} of ${totalPages}
         </ul>
+        
       </nav>
     `;
   }
@@ -166,4 +159,5 @@ const getCurrentUser = () => {
     getCurrentUser();
     getAllProducts(5, 1, null, null);
   };
+
   init();
