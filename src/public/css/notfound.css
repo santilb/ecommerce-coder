@@ -9,22 +9,23 @@
   }
   
   .page_404 img {
-    width: 100%;
+    width: 400%;
   }
   
   .four_zero_four_bg {
-    background-image: url(https://img.freepik.com/free-vector/glitch-error-404-page_23-2148105404.jpg);
-    height: 400px;
+    background-image: url(https://i.gifer.com/19Jq.gif);
+    height: 300px;
     background-position: center;
   }
   .four_zero_four_bg2 {
-    background-image: url(https://img.freepik.com/free-vector/glitch-error-404-page_23-2148105404.jpg);
-    height: 400px;
+    background-image: url(https://i.gifer.com/19Jq.gif);
+    height: 300px;
     background-position: center;
   }
 
   .four_zero_four_bg h1 {
     font-size: 80px;
+
   }
   
   .four_zero_four_bg h3 {

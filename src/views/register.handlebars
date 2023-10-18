@@ -1,17 +1,32 @@
-<button class="button is-danger mt-3" onclick="location.href='/auth/login'">Ir a login</button>
-<div class="container" style>
-    <div class="field">
-        <form action="/auth/register" method="post" class="control has-icons-left has-icons-right">
-            <label class="label mt-6">Nuevo Usuario</label>
-            <input type="text" name="first_name" placeholder="Nombre" class="input is-success mt-3"></input>
-            <input type="text" name="last_name" placeholder="Apellido" class="input is-success mt-3"></input>
-            <input type="number" name="age" placeholder="Edad" class="input is-success mt-3" min="0" max="100"></input>
-            <input type="email" name="email" placeholder="Email" class="input is-success mt-3" required></input>
-            <span class="icon is-small is-left">
-                    <i class="fas fa-user"></i>
-                </span>
-            <input type="password" name="password" placeholder="Crea una contraseña" class="input is-success mt-3" required></input>
-            <button type="submit"  class="button is-primary mt-3">Registrarme</button>
-        </form>
+<div class="container">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                    <div class="card-body p-5 text-center">
+                        <h3 class="mb-5">Registrar Nuevo Usuario</h3>
+                        <form action="/auth/register" method="post">
+                        <div class="form-group">
+                            <input type="text" name="first_name" placeholder="Nombre"
+                                class="input is-success mt-3"></input>
+                            <input type="text" name="last_name" placeholder="Apellido"
+                                class="input is-success mt-3"></input>
+                            <input type="number" name="age" placeholder="Edad" class="input is-success mt-3" min="0"
+                                max="100"></input>
+                            <input type="email" name="email" placeholder="Email" class="input is-success mt-3"
+                                required></input>
+                            <input type="password" name="password" placeholder="Crea una contraseña"
+                                class="input is-success mt-3" required></input>
+                                </div>
+                            <button type="submit" class="btn btn-lg btn-primary">Registrarme</button>
+                        </form>
+                        <hr>
+                        <button class="btn btn-lg btn-block btn-secondary" onclick="location.href='/auth/login'">Volver al
+                            login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 </div>
