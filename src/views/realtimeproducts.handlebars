@@ -1,8 +1,7 @@
-<h1>Vista Home</h1>
-<a href="/products">Productos</a>
+<h1>Vista home</h1>
 
 <div>
-    <form action="/api/products" method="POST" enctype="multipart/form-data" id="form">
+    <form action="/" method="post" enctype="multipart/form-data" id="formRealtime">
         <label for="title">
             Title :<input type="text" name="title" id="inputName" >
         </label>
@@ -21,28 +20,20 @@
         <label for="category">
             Category :<input type="text" name="category" id="inputCategory">
         </label>
-        <input type="file" name='file' accept="image/*" >
         <input type="submit">
-    </form>
-</div> 
+</div id="list">
 
-<div id="list">
   {{#each products}}
-    <ul id="{{_id}}" style='margin-bottom:30px;'>
+    <ul id="{{code}}" style='margin-bottom:30px;'>
       <li>Nombre: {{title}}</li>
-      <li>Description: {{description}}</li>
-      <li>Price: {{price}}</li>
-      <li>Stock: {{stock}}</li>
+      <li>Codigo: {{code}}</li>
       <li>ID: {{_id}}</li>
+      <button type="button" onclick="deleteProductSocket({{code}})" name="Remove">Remove</button>
     </ul>
-    <button onclick="deleteProduct('{{this._id}}')">Remove Product from DataBase</button>
   {{/each}}
 
-{{#if (gt currentPage 1)}}
-  <a href="{{#if this.prevLink}}{{this.prevLink}}{{else}}#{{/if}}" class="page-link">Previous Page</a>
-{{/if}}
-
-{{#if (lt currentPage totalPages)}}
-  <a href="{{this.nextLink}}"  class="page-link">Next Page</a>
-{{/if}}
-</div>
+  
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io()
+</script>

@@ -1,0 +1,67 @@
+{{! HEADER }}
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="/">
+      <img
+        src="https://logo.com/image-cdn/images/kts928pd/production/2305c171f221a8e43ef12e16ca0d91cecbb60160-414x420.png"
+        width="70" style="max-height: max-content;" />
+    </a>
+
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          {{#if user}}
+          <div style="display: flex;
+                      align-items: center;">
+            <div>
+              <h4 class="title is-4" style="margin-right: 15px;">Bienvenido
+                {{user.first_name}}
+                {{user.last_name}}</h4>
+            </div>
+            <div style="margin-right: 10px;">
+              <a class="btn btn-primary" onclick="goToCart()">
+                <strong>Cart</strong>
+              </a>
+            </div>
+            <div style="margin-right: 10px;">
+              <a class="btn btn-dark" onclick="goToLogout()">
+                Logout
+              </a>
+            </div>
+
+          </div>
+          {{else}}
+
+          <div>
+            <a class="button is-primary" onclick="goToRegister()">
+              <strong>Sign up</strong>
+            </a>
+            <a class="button is-light" onclick="goToLogin()">
+              Log in
+            </a>
+          </div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="container">
+  <div class="row" id="products-container">
+
+  </div>
+</section>
+{{!PAGINATION }}
+
+<div id="pagination-container" style="margin:50px;"></div>
+<script src="js/home.js"></script>

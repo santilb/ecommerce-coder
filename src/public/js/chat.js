@@ -1,44 +1,86 @@
-const socket = io();
+const chatBox = document.getElementById('chat-box');
+let nombreUsuario = '';
 
-const messageContainer = document.getElementById("messages");
-const btn = document.getElementById("send");
-const usernameInput = document.getElementById("username");
-const messageInput = document.getElementById("message");
+async function pushChat(user, msg) {
+  try {
+    const msgChat = { user, msg };
+    const response = await fetch('/chat', {
+      method: 'post',
+      body: JSON.stringify(msgChat),
+      headers: {
+        'content-type': 'application/json',
+      },
+    }).then((result) => {
+      console.log(JSON.stringify(result));
+    });
+  } catch (error) {}
+}
 
-btn.addEventListener("click", () => {
-  const message = messageInput.value;
-  const username = usernameInput.value;
-  messageInput.value = "";
-  usernameInput.value = "";
+async function chatMsg() {
+  try {
+    const url = 'http://localhost:8080/current/user';
+    const data = {};
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const res = await fetch(url, options)
+      .then((response) => response.json())
+      .then((data) => {
+        nombreUsuario = data.user.email;
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        alert(JSON.stringify(error));
+      });
+    chatBox.addEventListener('keydown', async function (e) {
+      e.stopPropagation();
 
-  socket.emit("new-message", {
-    message: message,
-    username: username,
-  });
-});
+      if (e.key === 'Enter') {
+        const msg = chatBox.value;
+        chatBox.value = '';
 
-socket.on("refresh-messages", (messages) => {
-  messageContainer.innerHTML = messages
-    .map((message) => {
-      return `<div
-       class="notification is-primary is-light"
-       style=" text-align: justify; margin-rigth:35px;     padding: 15px;
-       border-radius: 20px;">
-           <div>
-           <p>${message.message}</p>
-           </div>
-           <div
-           style="text-align: end; font-style: italic; font-weight: 400"
-           class="has-text-dark"
-           >
-           ${message.username}
-           </div>
-       </div>`;
+        await pushChat(nombreUsuario, msg);
+        socket.emit('Mensaje pusheado a BD', { msg });
+        await renderAllMessages();
+      }
+    });
+  } catch (error) {}
+}
+
+async function renderAllMessages() {
+  const url = 'http://localhost:8080/chat/getchat';
+  const data = {};
+  const options = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const res = await fetch(url, options)
+    .then((response) => response.json())
+    .catch((error) => {
+      console.error('Error:', error);
+      alert(JSON.stringify(error));
+    });
+  const chat = res.chat;
+  const html = chat.messages
+    .map((elem) => {
+      let fragment = `
+      <ul id=${elem._id} style='margin-bottom:30px;'>
+      <div id="${elem.user}">${elem.user}</div>
+      <div id="msg">Message: ${elem.msg}</div>
+      <div>ID: ${elem._id}</div>
+    </ul>
+     `;
+      return fragment;
     })
-    .join("");
-});
+    .join('\n');
+  document.getElementById('chat-messages').innerHTML = html;
+}
 
-getNow = () => {
-  const now = new Date();
-  return `${now.getHours()}:${now.getMinutes()}`;
-};
+
+
+chatMsg();
